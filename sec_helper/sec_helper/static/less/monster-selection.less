@@ -1,0 +1,96 @@
+@import 'variables.less';
+
+
+.center{
+  align-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+.save-btn {
+  display: inline-block;
+  margin: 0.5em;
+  width: 5em;
+
+  padding: 0.5em;
+  border: 0.1em solid @color-5;
+  border-radius: 0.5rem;
+  color: @color-5;
+  background-color: @color-00;
+  font-size: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: .3s ease;
+  left: 0px;
+  .center;
+  &:hover {
+
+    background-color: @color-5;
+    color: @white;
+  }
+  
+}
+
+
+@fusion-color: @color-9;
+@xyz-color: black;
+
+.label-selection(@color) {
+  display: inline-block;
+  font-size: 25px;
+  font-weight: 400;
+	border: 0.1em solid @color;
+	color: @color;
+  background-color: @white;
+	margin: 0.1em;
+	padding: 0.1em;
+	border-radius: 0;
+  width: 2em;
+  height: 2em;
+  
+  
+  display: flex;
+  flex-direction: column;
+  .center;
+
+  input[type=checkbox]  {
+    appearance: none;
+    -webkit-appearance: none;
+
+    &:checked {
+      background-color: @color;
+    }
+  }
+
+  &:has(input[type=checkbox]:checked) {
+    background: @color;
+    color: @white;
+  }
+
+  &:has(input[type=checkbox]:not(:checked)):hover {
+    opacity: 0.5;
+  }
+}
+
+label.xyz-selection {
+	.label-selection(@xyz-color)
+}
+
+label.fusion-selection {
+	.label-selection(@fusion-color)
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0.5em;
+	padding: 0.2em;
+  
+}
+.checkbox-group-label{
+  display: block;
+  margin: 0.5em;
+	padding: 0.5em;
+  
+}

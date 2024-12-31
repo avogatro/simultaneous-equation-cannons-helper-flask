@@ -1,0 +1,152 @@
+"""page routes for sec_helper"""
+
+from flask import current_app as app
+from flask import Blueprint
+from flask import render_template, request, session, redirect, url_for
+
+from webargs import fields, validate
+from webargs.flaskparser import abort, parser
+import json
+### enable import sub modules in current directory
+# pylint: disable=C0411
+import os
+import sys
+import inspect
+
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, current_dir)
+### end
+
+
+# pylint: disable=C0413
+from model.simultaneous_equation_cannons_state import SimultaneousEquationCannonsSolution, SimultaneousEquationCannonsState
+from model.form_input_monsters import parse_monster_level
+
+sec_helper_blueprint = Blueprint("sec_helper_blueprint", __name__, template_folder="templates", static_folder="static")
+
+validators_args = {
+    "xyz-selection": fields.List(fields.Str(), validate =[validate.Length(min=0,max=12) ]),
+    "fusion-selection": fields.List(fields.Str(), validate =[validate.Length(min=0,max=12) ]),
+    "button-save":fields.Str()
+}
+
+
+@sec_helper_blueprint.route("/", methods=["GET"])
+def sec_helper() -> str:
+    """
+    """
+    defaults_session = {'extra-deck-xyz':[2,3,4,5,6], 'extra-deck-fusion': [2,3,4,5,6], 'banished-xyz':[], 'banished-fusion': [] }
+    session_vars = _get_session_variables(defaults_session)
+    sec = SimultaneousEquationCannonsState(session_vars['extra-deck-fusion'],session_vars['extra-deck-xyz'],
+                                           session_vars['banished-fusion'], session_vars['banished-xyz'])
+    
+    return render_template(
+        "sec_helper.jinja2",
+        title="SEC Helper",
+        subtitle="",
+        template="sec-helper-template",
+        value_table=sec.value_table
+    )
+
+def _get_session_variables(session_variables: dict):
+    res = dict()
+    for key in session_variables.keys():
+        if session.get(key) is not None:
+            res[key] = parse_monster_level(session[key])
+        else:
+            res[key] = session_variables[key] #set to default 
+    return res
+
+@sec_helper_blueprint.route("/extra_deck", methods=["GET"])
+def extra_deck() -> str:
+    """
+    get extra deck monster page
+    """
+
+    defaults_session = {'extra-deck-xyz':[2,3,4,5,6], 'extra-deck-fusion': [2,3,4,5,6] }
+    session_vars = _get_session_variables(defaults_session)
+
+    return render_template(
+        "monster_selection.jinja2",
+        title="Define Extra Deck Monsters",
+        subtitle="to Banish",
+        template="sec-helper-template",
+        selected_xyz = session_vars['extra-deck-xyz'],
+        selected_fusion = session_vars['extra-deck-fusion']
+    )
+
+@sec_helper_blueprint.route("/extra_deck", methods=["POST"])
+@parser.use_args(validators_args, location="form")
+def extra_deck_post(args) -> str:
+    """
+    set extra deck monsters in session
+    """
+    selected_xyz = []
+    selected_fusion = []
+    if 'xyz-selection' in args:
+        selected_xyz = args['xyz-selection']
+    if 'fusion-selection' in args:
+        selected_fusion = args['fusion-selection']
+        
+    selected_xyz_integer = parse_monster_level(selected_xyz)
+    selected_fusion_integer = parse_monster_level(selected_fusion)
+
+    session['extra-deck-xyz'] = list(map(str,selected_xyz_integer))
+    session['extra-deck-fusion'] = list(map(str,selected_fusion_integer))
+
+    return redirect(url_for('sec_helper_blueprint.sec_helper'))
+
+
+
+@sec_helper_blueprint.route("/banished", methods=["GET"])
+def banished_monsters() :
+    """
+    get banish monster page
+    """
+
+    defaults_session = {'banished-xyz':[], 'banished-fusion': [] }
+    session_vars = _get_session_variables(defaults_session)
+
+    return render_template(
+        "monster_selection.jinja2",
+        title="Define Previously Banished Monsters",
+        subtitle="for More SEC",
+        template="sec-helper-template",
+        selected_xyz = session_vars['banished-xyz'],
+        selected_fusion = session_vars['banished-fusion']
+    )
+
+@sec_helper_blueprint.route("/banished", methods=["POST"])
+@parser.use_args(validators_args, location="form")
+def banished_monsters_post(args) -> str:
+    """
+    set banished monsters in session
+    """
+    selected_xyz = []
+    selected_fusion = []
+    if 'xyz-selection' in args:
+        selected_xyz = args['xyz-selection']
+    if 'fusion-selection' in args:
+        selected_fusion = args['fusion-selection']
+
+    selected_xyz_integer = []
+    selected_fusion_integer =[]
+    if 'button-save' in args and args['button-save'] != 'reset':
+        selected_xyz_integer = parse_monster_level(selected_xyz)
+        selected_fusion_integer = parse_monster_level(selected_fusion)
+
+    session['banished-xyz'] = list(map(str,selected_xyz_integer))
+    session['banished-fusion'] = list(map(str,selected_fusion_integer))
+
+    return redirect(url_for('sec_helper_blueprint.sec_helper'))
+
+
+# This error handler is necessary for usage with Flask-RESTful
+@parser.error_handler
+# pylint: disable=W0613
+def handle_request_parsing_error(err, req, schema, *, error_status_code, error_headers):
+    """webargs error handler that uses Flask-RESTful's abort function to return
+    a JSON error response to the client.
+    """
+    abort(error_status_code, errors=err.messages)

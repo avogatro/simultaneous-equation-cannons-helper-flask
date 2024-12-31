@@ -1,0 +1,121 @@
+@import 'variables.less';
+
+.center{
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+ul.solution-display {
+    margin: 0;
+    padding: 0;;
+}
+li.solution-row
+{
+   
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0.2em;
+  
+}
+.solution {
+    border: 0.02em solid @theme-color;
+    padding: 0.1em;
+    margin: 0;
+    font-size: 25px;
+    font-weight: 400;
+    color: @theme-color;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    flex-direction: column;
+    .center;
+    background-color: @color-00;
+    input[type=radio]  {
+        appearance: none;
+        -webkit-appearance: none;
+    
+        &:checked {
+          background-color: @theme-color;
+        }
+      }
+    
+    &:has(input[type=radio]:checked) {
+        background: @theme-color;
+        color: @white;
+    }
+    .center;
+}
+.solution-send-xyz-rank {
+    display: none;
+}
+.solution-send-fusion-level {
+    display: none;
+}
+.solution-returned_xyz-rank {
+    display: none;
+}
+.solution-returned-fusion-level {
+    display: none;
+}
+.solution-monster-level {
+    display: none;
+}
+.solution-total-cards {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    
+}
+.solution-info{
+    display: flex;
+    flex-direction: column;
+    width: 14em;
+    height: 4em;
+    background-color: @color-00;
+    border: 0.02em solid @theme-color;
+    position: relative;
+    top: -2.5em;
+    left: 8em;
+    font-size: 25px;
+    font-weight: 400;
+    color: @theme-color;
+    border-radius: 0;
+    .center;
+    justify-content: center;
+}
+.monter-level{
+    .solution;
+    .solution-total-cards;
+    border: none;
+    width: 3.29em;
+}
+.reset-btn{
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  width: 10em;
+
+  padding: 0.5em;
+  border: 0.1em solid @color-5;
+  border-radius: 0.5rem;
+  color: @color-5;
+  background-color: @color-00;
+  font-size: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: .3s ease;
+  left: 0;
+  top: -1em;
+  &:hover {
+
+    background-color: @color-5;
+    color: @white;
+  }
+  
+    
+}

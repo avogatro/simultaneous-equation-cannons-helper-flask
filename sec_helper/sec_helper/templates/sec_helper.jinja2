@@ -1,0 +1,51 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+  {% assets "main_output_style_bundle" %}
+    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+  {% endassets %}
+
+  {% assets "common_style_bundle" %}
+    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+  {% endassets %}
+ 
+{% endblock %}
+
+{% block content %}
+  {% include 'sec_helper_js.jinja2' %}
+  {% include "navigation.jinja2" %}
+
+  
+  <div class="container">
+      <h1>{{ title }}</h1>
+      <div class="solution-info" id ="solution-info"></div>
+
+      <form action="{{ url_for('sec_helper_blueprint.banished_monsters_post') }}" method="post">
+      <button class="reset-btn" type="submit" name="button-save" value="reset" id="reset-btn">Reset Banished</button>
+      </form>
+      <ul class="solution-display">
+      {% for key in value_table.keys() %}
+        <li class="solution-row">
+
+        {% if value_table[key]|length > 0 %}
+          <label class="monter-level">Lvl {{value_table[key][0].monster_level_on_board}}:</label>
+        {% endif %}
+
+        {% for i in range(value_table[key]|length) %}
+          <label class="solution" for="solution-input-{{key}}-{{i}}">
+            
+            <div class="solution-total-cards">{{ value_table[key][i].total_cards }}</div>
+            <input id="solution-input-{{key}}-{{i}}" name="solution-radio" value="{{key}}-{{i}}" type="radio" onchange=
+            "changeSolution({{value_table[key][i].send_xyz_rank}},{{value_table[key][i].send_fusion_level}},
+            {{value_table[key][i].returned_xyz_rank}},{{value_table[key][i].returned_fusion_level}})"/>
+          </label>
+        {% endfor %}
+        </li>
+      {% endfor %}
+      </ul>
+  </div>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,55 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+{% assets "monster_selection_style_bundle" %}
+<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+{% endassets %}
+{% assets "common_style_bundle" %}
+<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+{% endassets %}
+{% endblock %}
+
+{% block content %}
+{% include "navigation.jinja2" %}
+
+
+<div class="container">
+  <h1>{{ title }}</h1>
+  <h2>{{ subtitle }}</h2>
+  <form action="{{ url_for(request.endpoint) }}" method="post">
+    <div class="rendered-form">
+
+      <button class="save-btn" type="submit" name="button-save" value="save" id="save-btn">Save</button>
+
+    
+      <label for="monster-level-selection" class="checkbox-group-label">Xyz Monster Rank Selection</label>
+
+      <div class="checkbox-group">
+        {% for i in range(1,13) %}
+        <div class="monster-selection-xyz">
+          <label for="xyz-selection-{{i}}" class="xyz-selection"><input id="xyz-selection-{{i}}" name="xyz-selection"
+              value="{{i}}" type="checkbox" {% if i in selected_xyz %} checked="True" {% endif %}
+              class="xyz-selection-input"><span>{{i}}</span></label>
+        </div>
+        {% endfor %}
+
+      </div>
+
+
+      <label for="monster-level-selection" class="checkbox-group-label">Fusion Monster Level
+        Selection</label>
+      <div class="checkbox-group">
+        {% for i in range(1,13) %}
+        <div class="monster-selection-fusion">
+          <label for="fusion-selection-{{i}}" class="fusion-selection"><input id="fusion-selection-{{i}}"
+              name="fusion-selection" value="{{i}}" type="checkbox" {% if i in selected_fusion %} checked="True" {%
+              endif %} class="fusion-selection-input"><span>{{i}}</span></label>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </form>
+</div>
+
+{% endblock %}

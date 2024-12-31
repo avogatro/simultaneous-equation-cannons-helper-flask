@@ -1,0 +1,27 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+  {% assets "home_style_bundle" %}
+    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+  {% endassets %}
+  {% assets "common_style_bundle" %}
+  <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+  {% endassets %}
+{% endblock %}
+
+{% block content %}
+  {% include "navigation.jinja2" %}
+
+  <div class="container">
+    <h1>{{ title }}</h1>
+    <h2>{{ subtitle }}</h2>
+    <div class="resource-links">
+      <p class="resource-link">Github repo <a href="https://github.com/avogatro/simultaneous-equation-cannons-helper">Windows App here.</a></p>
+      <p class="resource-link">Github repo <a href="https://github.com/avogatro/">Web App here.</a></p>
+    </div>
+
+
+  </div>
+
+
+{% endblock %}
