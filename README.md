@@ -11,10 +11,11 @@
   <h3 align="center">Simultaneous Equation Cannons Helper Flask</h3>
 
   <p align="center">
-    Flask Web UI for playing the Card <b>Simultaneous Equation Cannons</b> in the Game of <b>Yo-Gi-Oh</b>
+    Flask Web UI for playing the Card <b>Simultaneous Equation Cannons</b> in the Game of <b>Yu-Gi-Oh!</b>
   </p>
 </div>
 
+<label>View Demo <a href="https://avogatro.pythonanywhere.com/sec_helper/">https://avogatro.pythonanywhere.com/sec_helper/</a></label>
 
 
 <!-- TABLE OF CONTENTS -->
