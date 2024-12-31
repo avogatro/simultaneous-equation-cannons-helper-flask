@@ -1,12 +1,11 @@
 """page routes for sec_helper"""
 
-from flask import current_app as app
 from flask import Blueprint
-from flask import render_template, request, session, redirect, url_for
+from flask import render_template, session, redirect, url_for
 
 from webargs import fields, validate
 from webargs.flaskparser import abort, parser
-import json
+
 ### enable import sub modules in current directory
 # pylint: disable=C0411
 import os
@@ -20,7 +19,7 @@ sys.path.insert(0, current_dir)
 
 
 # pylint: disable=C0413
-from model.simultaneous_equation_cannons_state import SimultaneousEquationCannonsSolution, SimultaneousEquationCannonsState
+from model.simultaneous_equation_cannons_state import SimultaneousEquationCannonsState
 from model.form_input_monsters import parse_monster_level
 
 sec_helper_blueprint = Blueprint("sec_helper_blueprint", __name__, template_folder="templates", static_folder="static")
@@ -35,21 +34,36 @@ validators_args = {
 @sec_helper_blueprint.route("/", methods=["GET"])
 def sec_helper() -> str:
     """
+    display main data table and show solutions
     """
-    defaults_session = {'extra-deck-xyz':[2,3,4,5,6], 'extra-deck-fusion': [2,3,4,5,6], 'banished-xyz':[], 'banished-fusion': [] }
+    defaults_session = {'extra-deck-xyz':[2,3,4,5,6], 'extra-deck-fusion': [2,3,4,5,6],
+                        'banished-xyz':[], 'banished-fusion': [] }
     session_vars = _get_session_variables(defaults_session)
-    sec = SimultaneousEquationCannonsState(session_vars['extra-deck-fusion'],session_vars['extra-deck-xyz'],
+
+    sec = None
+    error = None
+    if len(session_vars['extra-deck-fusion']) + len(session_vars['extra-deck-xyz']) * 2 <= 15:
+        sec = SimultaneousEquationCannonsState(session_vars['extra-deck-fusion'],session_vars['extra-deck-xyz'],
                                            session_vars['banished-fusion'], session_vars['banished-xyz'])
-    
+    else:
+        sec = SimultaneousEquationCannonsState(defaults_session['extra-deck-fusion'],defaults_session['extra-deck-xyz'],
+                                           session_vars['banished-fusion'], session_vars['banished-xyz'])
+        session['extra-deck-xyz'] = list(map(str,defaults_session['extra-deck-xyz']))
+        session['extra-deck-fusion'] = list(map(str,defaults_session['extra-deck-fusion']))
+        error = "over15"
     return render_template(
         "sec_helper.jinja2",
         title="SEC Helper",
         subtitle="",
         template="sec-helper-template",
-        value_table=sec.value_table
+        value_table=sec.value_table,
+        error=error,
     )
 
 def _get_session_variables(session_variables: dict):
+    """
+    get session variables. if they don't exist, set default one
+    """
     res = dict()
     for key in session_variables.keys():
         if session.get(key) is not None:
@@ -88,7 +102,7 @@ def extra_deck_post(args) -> str:
         selected_xyz = args['xyz-selection']
     if 'fusion-selection' in args:
         selected_fusion = args['fusion-selection']
-        
+    
     selected_xyz_integer = parse_monster_level(selected_xyz)
     selected_fusion_integer = parse_monster_level(selected_fusion)
 

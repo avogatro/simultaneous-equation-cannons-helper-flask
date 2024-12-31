@@ -34,7 +34,6 @@ from typing import List
 from dataclasses import dataclass, field
 from enum import Enum, unique
 import operator
-import json
 @unique
 class CardOperation(Enum):
     """add or remove monster level"""
@@ -72,13 +71,6 @@ def __post_init__(self):
     self.sort_index_1 = self.total_cards
     self.sort_index_2 = self.send_xyz_rank
 
-def toJSON(self):
-        return json.dumps(
-            self,
-            default=lambda o: o.__dict__,
-            sort_keys=True,
-            indent=4)
-        
 class SimultaneousEquationCannonsState():
     """Class for organizing State of SimultaneousEquationCannons Helper"""
     _fusion_levels: List[int] = []
@@ -90,7 +82,8 @@ class SimultaneousEquationCannonsState():
     _compare_mode = CompareMode.EXCLUDE
 
     def __init__(self, fusion_levels: List[int], xyz_ranks: List[int],
-                 banished_fusion_levels: List[int], banished_xyz_ranks: List[int], compare_mode: CompareMode = CompareMode.EXCLUDE
+                 banished_fusion_levels: List[int], banished_xyz_ranks: List[int],
+                 compare_mode: CompareMode = CompareMode.EXCLUDE
                  ):
         self.set_extra_deck_monster_level(fusion_levels, xyz_ranks)
         self.set_banish_zone_monster_level(banished_fusion_levels, banished_xyz_ranks, compare_mode)
@@ -111,7 +104,7 @@ class SimultaneousEquationCannonsState():
         2 more Rank 4, because we may not have more rank 4 in extra decks.
         This is the normal case, unless we play more than 2x Rank 4 Monster
         """
-        self._value_table = dict()
+        self._value_table = {}
 
         temp_fusion_levels = self.fusion_levels
         temp_xyz_ranks = self.xyz_ranks
@@ -218,74 +211,15 @@ class SimultaneousEquationCannonsState():
             total  = [x.total_cards for x in self._value_table[k]]
             print(f"Monster Lvl/Rank to Match: {k} \t Possible Total Cards: {total}")
 
-    # def find_solution(self, monster_level: int, total_cards: int):
-    #     """find out if the banish effect can be activated"""
-    #     res = SimultaneousEquationCannonsSolution(solution_exist=False,
-    #                                               monster_level=monster_level,
-    #                                               total_cards=total_cards)
-    #     if monster_level not in self._value_table:
-    #         return res
-
-    #     if total_cards not in self._value_table[monster_level]:
-    #         return res
-
-    #     res.solution_exist = True
-    #     res.xyz_rank = total_cards - monster_level
-    #     res.fusion_level = monster_level - res.xyz_rank
-
-    #     temp_xyz_ranks = self.xyz_ranks
-    #     temp_fusion_levels = self.fusion_levels
-    #     if self._compare_mode == CompareMode.EXCLUDE:
-    #         temp_xyz_ranks = [xyz for xyz in self.xyz_ranks if xyz not in self.banished_xyz_ranks]
-    #         temp_fusion_levels = [fusion for fusion in self.fusion_levels if fusion not in self.banished_fusion_levels]
-    #     #normal case: if solution without pre banished monster exist
-    #     if res.xyz_rank in temp_xyz_ranks and res.fusion_level in temp_fusion_levels:
-    #         return res
-
-    #     #special case: if solution only exist with pre banished monsters
-    #     for xyz in temp_xyz_ranks:
-    #         for fusion in temp_fusion_levels:
-    #             if xyz + xyz + fusion == total_cards:
-    #                 temp_banished_xyz = self.banished_xyz_ranks + [xyz]
-    #                 temp_banished_fusion = self.banished_fusion_levels + [fusion]
-    #                 for ban_xyz in temp_banished_xyz:
-    #                     for ban_fusion in temp_banished_fusion:
-    #                         if ban_xyz + ban_fusion == monster_level:
-    #                             res.xyz_rank = xyz
-    #                             res.fusion_level = fusion
-    #                             return res
-
-    # def change_monster(self, level: int, monster_kind: MonsterKind, card_operation: CardOperation):
-    #     """change a single monster in extra deck"""
-    #     temp_fusion_level = self._fusion_levels
-    #     temp_xyz_rank = self._xyz_ranks
-    #     try:
-    #         if card_operation == CardOperation.MINUS:
-    #             if monster_kind == MonsterKind.FUSION:
-    #                 temp_fusion_level.remove(level)
-    #             else:
-    #                 temp_xyz_rank.remove(level)
-
-    #         if card_operation == CardOperation.PLUS:
-    #             if monster_kind == MonsterKind.FUSION:
-    #                 temp_fusion_level.append(level)
-    #             else:
-    #                 temp_xyz_rank.append(level)
-    #     except ValueError as e:
-    #         print(e)
-    #         return
-    #     self.set_extra_deck_monster_level(temp_fusion_level, temp_xyz_rank)
-
     def reset_banish_zone_monster_level(self):
         """remove all banished xyz/fusion monster from calculation"""
         self._banished_fusion_levels = []
         self._banished_xyz_ranks = []
-        # self._generate_value_table()
 
-    def set_banish_zone_monster_level(self, banished_fusion_levels: List[int], banished_xyz_ranks: List[int], compare_mode: CompareMode):
+    def set_banish_zone_monster_level(self, banished_fusion_levels: List[int],
+                                      banished_xyz_ranks: List[int], compare_mode: CompareMode):
         """set banished xyz/fusion monster for calculation"""
         self._check_input(banished_fusion_levels, banished_xyz_ranks)
         self._compare_mode = compare_mode
         self._banished_fusion_levels = sorted(banished_fusion_levels)
         self._banished_xyz_ranks = sorted(banished_xyz_ranks)
-        # self._generate_value_table()

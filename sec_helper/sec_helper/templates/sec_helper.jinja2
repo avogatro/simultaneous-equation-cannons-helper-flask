@@ -18,7 +18,13 @@
   
   <div class="container">
       <h1>{{ title }}</h1>
-      <div class="solution-info" id ="solution-info"></div>
+      <div class="solution-info" id ="solution-info">
+      {% if error =="over15" %}
+      <label>Extra Deck Monster Over 15! Reset</label>
+      {% else %}
+      <label>Select Total Number to Get More Info</label>
+      {% endif %}
+      </div>
 
       <form action="{{ url_for('sec_helper_blueprint.banished_monsters_post') }}" method="post">
       <button class="reset-btn" type="submit" name="button-save" value="reset" id="reset-btn">Reset Banished</button>

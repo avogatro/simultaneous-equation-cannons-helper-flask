@@ -1,6 +1,5 @@
 """General page routes."""
 from flask import Blueprint
-from flask import current_app as app
 from flask import render_template, redirect, url_for
 
 # Blueprint Configuration
@@ -16,16 +15,6 @@ def home() -> str:
     """
     products = []
     return redirect(url_for('sec_helper_blueprint.sec_helper'))
-    
-    #return 
-        # render_template(
-        # "index.jinja2",
-        # title="Flask Blueprint Demo",
-        # subtitle="Demonstration of Flask blueprints in action.",
-        # template="home-template",
-        # products=products,
-        
-        #)
 
 
 @home_blueprint.route("/about", methods=["GET"])

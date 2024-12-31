@@ -21,29 +21,32 @@ li.solution-row
   
 }
 .solution {
-    border: 0.02em solid @theme-color;
+    border: 0.02em solid @color-8;
     padding: 0.1em;
     margin: 0;
     font-size: 25px;
     font-weight: 400;
-    color: @theme-color;
+    color:@color-8;
     width: 1.5em;
     height: 1.5em;
+    
     display: flex;
     flex-direction: column;
+
     .center;
+
     background-color: @color-00;
     input[type=radio]  {
         appearance: none;
         -webkit-appearance: none;
     
         &:checked {
-          background-color: @theme-color;
+          background-color:@color-8;
         }
       }
     
     &:has(input[type=radio]:checked) {
-        background: @theme-color;
+        background:@color-8;
         color: @white;
     }
     .center;
@@ -77,13 +80,13 @@ li.solution-row
     width: 14em;
     height: 4em;
     background-color: @color-00;
-    border: 0.02em solid @theme-color;
+    border: 0.02em solid@color-8;
     position: relative;
     top: -2.5em;
     left: 8em;
     font-size: 25px;
     font-weight: 400;
-    color: @theme-color;
+    color:@color-8;
     border-radius: 0;
     .center;
     justify-content: center;

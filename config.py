@@ -38,5 +38,4 @@ class Config:
                     "Application running in `development` mode cannot create assets without `node` installed."
                 )
 
-    # Hardcoded data
-    # PRODUCT_DATA_FILEPATH = f"{BASE_DIR}/data/products.json"
+

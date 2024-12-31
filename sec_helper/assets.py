@@ -11,7 +11,7 @@ def compile_static_assets(assets: Bundle) -> Bundle:
 
     :returns: Bundle
     """
-   
+
     assets = Environment(app)    
     assets.auto_build = True
     assets.debug = False
@@ -33,19 +33,19 @@ def compile_static_assets(assets: Bundle) -> Bundle:
         output="dist/css/monster-selection.css",
         extra={"rel": "stylesheet/less"},
     )
-    
+ 
     main_output_style_bundle = Bundle(
         "sec_helper_blueprint/less/main-output.less",
         filters="less,cssmin",
         output="dist/css/main-output.css",
         extra={"rel": "stylesheet/less"},
     )
-    
+
     assets.register("common_style_bundle", common_style_bundle)
     assets.register("home_style_bundle", home_style_bundle)
     assets.register("monster_selection_style_bundle", monster_selection_style_bundle)
     assets.register("main_output_style_bundle", main_output_style_bundle)
-    
+
     if app.config["ENVIRONMENT"] == "development":
         common_style_bundle.build()
         home_style_bundle.build()
