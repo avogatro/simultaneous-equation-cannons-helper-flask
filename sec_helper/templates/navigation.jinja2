@@ -4,20 +4,22 @@
   <div class="nav-wrapper">
 
     <div class="left-nav">
-      <a href="{{ url_for('home_blueprint.home') }}">
-        <img src="{{ url_for('static', filename='dist/img/icon.png') }}" alt="logo"/>
-      </a>
-        <a href="{{ url_for('sec_helper_blueprint.sec_helper') }}">Main</a>
-        <a href="{{ url_for('sec_helper_blueprint.extra_deck') }}">Extra Deck</a>
-        <a href="{{ url_for('sec_helper_blueprint.banished_monsters') }}">Banished Monsters</a>
-        <a href="{{ url_for('home_blueprint.about') }}">About</a>
-        <!--<a href="{{ url_for('home_blueprint.contact') }}">Contact</a>-->
+      <div class="logo">
+        <a href="{{ url_for('home_blueprint.home') }}">
+          <img src="{{ url_for('static', filename='dist/img/icon.png') }}" alt="logo" class="logo" />
+        </a>
+      </div>
+
+      <a class="nav-bar-url" href="{{ url_for('sec_helper_blueprint.sec_helper') }}">Main</a>
+      <a class="nav-bar-url" href="{{ url_for('sec_helper_blueprint.extra_deck') }}">Extra Deck</a>
+      <a class="nav-bar-url" href="{{ url_for('sec_helper_blueprint.banished_monsters') }}">Banished Monsters</a>
+      <a class="nav-bar-url" href="{{ url_for('home_blueprint.about') }}">About</a>
+      <!--<a href="{{ url_for('home_blueprint.contact') }}">Contact</a>-->
     </div>
 
     <div class="right-nav">
-      
+
     </div>
 
   </div>
 </nav>
-

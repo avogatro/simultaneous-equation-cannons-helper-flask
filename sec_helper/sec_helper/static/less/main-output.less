@@ -8,7 +8,9 @@
 
 ul.solution-display {
     margin: 0;
-    padding: 0;;
+    padding: 0;
+    position: relative;
+    top: -70px;
 }
 li.solution-row
 {
@@ -27,15 +29,15 @@ li.solution-row
     font-size: 25px;
     font-weight: 400;
     color:@color-8;
+    background-color: @color-00;
     width: 1.5em;
     height: 1.5em;
     
     display: flex;
     flex-direction: column;
-
     .center;
 
-    background-color: @color-00;
+
     input[type=radio]  {
         appearance: none;
         -webkit-appearance: none;
@@ -47,9 +49,21 @@ li.solution-row
     
     &:has(input[type=radio]:checked) {
         background:@color-8;
-        color: @white;
+        color: @color-00;
     }
-    .center;
+
+
+    &:has(input[type=radio]:not(:checked)):hover {
+        background:@color-8;
+        color: @white;
+        opacity: 0.8;
+    }
+
+    &:has(input[type=radio]:checked):hover {
+        background-color: @white;
+        color: @color-8;
+        opacity: 0.8;
+    }
 }
 .solution-send-xyz-rank {
     display: none;
@@ -82,8 +96,8 @@ li.solution-row
     background-color: @color-00;
     border: 0.02em solid@color-8;
     position: relative;
-    top: -2.5em;
-    left: 8em;
+    top: -90px;
+    left: 11em;
     font-size: 25px;
     font-weight: 400;
     color:@color-8;
@@ -98,7 +112,7 @@ li.solution-row
     width: 3.29em;
 }
 .reset-btn{
-  display: inline-block;
+  display: inline;
   position: relative;
   margin: 0;
   width: 10em;
@@ -113,7 +127,7 @@ li.solution-row
   text-decoration: none;
   transition: .3s ease;
   left: 0;
-  top: -1em;
+  top: -90px;
   &:hover {
 
     background-color: @color-6;
@@ -122,3 +136,4 @@ li.solution-row
   
     
 }
+

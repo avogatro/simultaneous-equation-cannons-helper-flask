@@ -54,7 +54,7 @@ def sec_helper() -> str:
     return render_template(
         "sec_helper.jinja2",
         title="SEC Helper",
-        subtitle="",
+        subtitle="Math Lab",
         template="sec-helper-template",
         value_table=sec.value_table,
         error=error,
