@@ -93,12 +93,15 @@ That is why I want to use this program to help me to play when I still know how 
  - The app shows every Level of monster u can match and the required total cards in both player's hand and on both player's board
  - Click on each total number to see what level/rank u have to banish
 
+<img src="data\SEC_helper_web_extra_deck.png" alt="screenshot01" width="800">
+
 #### On Second or third SEC
  - there are previously banished monster in your banished zone
  - define them under "Banished Monsters"
  - Save
  - Click on each total number to see what level/rank u have to banish
 
+<img src="data\SEC_helper_web_banished.png" alt="screenshot02" width="800">
 
 #### Use only Python in console, no UI
  - open console, go to project folder
