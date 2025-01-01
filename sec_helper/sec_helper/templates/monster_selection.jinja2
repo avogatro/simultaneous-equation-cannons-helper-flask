@@ -1,7 +1,7 @@
 {% extends "layout.jinja2" %}
 
 {% block pagestyles %}
-{% assets "monster_selection_style_bundle" %}
+{% assets "sec_helper_monster_selection_style_bundle" %}
 <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
 {% endassets %}
 {% assets "common_style_bundle" %}
@@ -14,14 +14,7 @@
 
 
 <div class="container">
-  <h1 class="aurora-title">{{ title }}
-  {# <div class="aurora">
-      <div class="aurora__item"></div>
-      <div class="aurora__item"></div>
-      <div class="aurora__item"></div>
-      <div class="aurora__item"></div>
-    </div> #}
-  </h1>
+  <h1 class="aurora-title">{{ title }}</h1>
   <h2>{{ subtitle }}</h2>
   <form action="{{ url_for(request.endpoint) }}" method="post">
     <div class="rendered-form">

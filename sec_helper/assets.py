@@ -12,7 +12,7 @@ def compile_static_assets(assets: Bundle) -> Bundle:
     :returns: Bundle
     """
 
-    assets = Environment(app)    
+    assets = Environment(app)
     assets.auto_build = True
     assets.debug = False
     common_style_bundle = Bundle(
@@ -27,27 +27,28 @@ def compile_static_assets(assets: Bundle) -> Bundle:
         output="dist/css/home.css",
         extra={"rel": "stylesheet/less"},
     )
-    monster_selection_style_bundle = Bundle(
+    sec_helper_monster_selection_style_bundle = Bundle(
         "sec_helper_blueprint/less/monster-selection.less",
         filters="less,cssmin",
-        output="dist/css/monster-selection.css",
+        output="dist/css/sec-helper-monster-selection.css",
         extra={"rel": "stylesheet/less"},
     )
- 
-    main_output_style_bundle = Bundle(
-        "sec_helper_blueprint/less/main-output.less",
+
+    sec_helper_main_style_bundle = Bundle(
+        "sec_helper_blueprint/less/main-page.less",
         filters="less,cssmin",
-        output="dist/css/main-output.css",
+        output="dist/css/sec-helper-main-page.css",
         extra={"rel": "stylesheet/less"},
     )
 
     assets.register("common_style_bundle", common_style_bundle)
     assets.register("home_style_bundle", home_style_bundle)
-    assets.register("monster_selection_style_bundle", monster_selection_style_bundle)
-    assets.register("main_output_style_bundle", main_output_style_bundle)
+    assets.register("sec_helper_monster_selection_style_bundle", sec_helper_monster_selection_style_bundle)
+    assets.register("sec_helper_main_style_bundle", sec_helper_main_style_bundle)
+
 
     if app.config["ENVIRONMENT"] == "development":
         common_style_bundle.build()
         home_style_bundle.build()
-        monster_selection_style_bundle.build()
+        sec_helper_monster_selection_style_bundle.build()
     return assets
