@@ -164,3 +164,15 @@ def handle_request_parsing_error(err, req, schema, *, error_status_code, error_h
     a JSON error response to the client.
     """
     abort(error_status_code, errors=err.messages)
+
+@sec_helper_blueprint.route("/help", methods=["GET"])
+def sec_help() -> str:
+    """
+    show help page
+    """
+    return render_template(
+        "sec_helper_help.jinja2",
+        title="Tutorials",
+        subtitle="",
+        template="sec-helper-template",
+    )

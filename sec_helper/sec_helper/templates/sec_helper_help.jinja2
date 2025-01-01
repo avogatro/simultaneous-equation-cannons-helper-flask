@@ -1,0 +1,48 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+  {% assets "main_output_style_bundle" %}
+    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+  {% endassets %}
+
+  {% assets "common_style_bundle" %}
+    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+  {% endassets %}
+ 
+{% endblock %}
+
+{% block content %}
+  {% include "navigation.jinja2" %}
+
+  
+  <div class="container">
+      <h1>{{ title }}</h1>
+
+    <h3>Usage</h3>
+
+    <p>Use page <b class="help">Extra Deck</b> to setup level/rank. Play YGO.</p>
+    <p>Add number of cards in both players hand and on both side of the board together.
+    That is <b class="help">"total cards"</b>.</p>
+    <p>Opponent has monsters on the field, that is not Link, with a Rank/Level in the data.
+    That is <b class="help">"monster level to match"</b>.</p>
+    <p>In the main screen of this app, you can see in every row: 
+    <b class="help">"monster level to match"</b> followed by a list of <b class="help">"total cards"</b>.</p>
+    <p>If SEC resolves and at that moment:</p>
+    <ul>
+    <li>A <b class="help">"monster with level to match"</b> is still on the field</li>
+    <li>and <b class="help">"total cards"</b> is still in the main screen on the right side of that <b class="help">"monster Level to match"</b></li>
+    </ul>
+
+    <p>then you can banish your opponent's entire field.</p>
+
+    <p>If u click on the "total cards" button, u see what to send and what to return.</p>
+    <p>If you activate a second SEC, monsters to send and  to return do not have to be the same.</p>
+    <p>Use page <b class="help">Banished Monsters</b> to define the situation.</p>
+    <p>The data will change accordingly.</p>
+        
+  </div>
+
+
+
+{% endblock %}
+
