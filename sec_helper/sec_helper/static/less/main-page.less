@@ -22,18 +22,17 @@ li.solution-row
   
 }
 .solution {
-    border: 0.02em solid @color-8;
-    padding: 0.1em;
+    border: 1px solid @color-8;
+    padding: 0;
     margin: 0;
     font-size: 25px;
     font-weight: 400;
     color:@color-8;
     background-color: @color-00;
-    width: 3em;
-    height: 3em;
+    width: 74px;
+    height: 74px;
     
-    display: flex;
-    flex-direction: column;
+    display: grid;
     transition: .3s ease;
     .center;
 
@@ -81,12 +80,10 @@ li.solution-row
     display: none;
 }
 .solution-total-cards {
-    align-items: center;
-    align-content: center;
+    .center;
     justify-content: center;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+    display: grid;
+    
     
 }
 .solution-info{
@@ -109,7 +106,7 @@ li.solution-row
     .solution;
     .solution-total-cards;
     border: none;
-    width: 6.29em;
+    width: 150px;
 }
 .reset-btn{
   display: inline;

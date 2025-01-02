@@ -39,8 +39,9 @@
         {% endif %}
 
         {% for i in range(value_table[key]|length) %}
+          {% set hct_color = color_range[value_table[key][i].total_cards] %}
           <label class="solution" for="solution-input-{{key}}-{{i}}">
-            <div class="solution-total-cards">{{ value_table[key][i].total_cards }}</div>
+            <div class="solution-total-cards" style="color:{{hct_color}}">{{ value_table[key][i].total_cards }}</div>
             <input id="solution-input-{{key}}-{{i}}" name="solution-radio" value="{{key}}-{{i}}" type="radio" onchange=
             "changeSolution({{value_table[key][i].send_xyz_rank}},{{value_table[key][i].send_fusion_level}},
             {{value_table[key][i].returned_xyz_rank}},{{value_table[key][i].returned_fusion_level}})"/>

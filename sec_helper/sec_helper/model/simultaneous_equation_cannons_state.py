@@ -34,6 +34,20 @@ from typing import List
 from dataclasses import dataclass, field
 from enum import Enum, unique
 import operator
+
+### enable import sub modules in current directory
+# pylint: disable=C0411
+import os
+import sys
+import inspect
+
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, current_dir)
+### end
+
+from hct_color_finder import HctColorFinder
+
 @unique
 class CardOperation(Enum):
     """add or remove monster level"""
@@ -67,6 +81,8 @@ class SimultaneousEquationCannonsSolution:
     send_fusion_level: int = 0
     returned_xyz_rank: int = 0
     returned_fusion_level: int = 0
+
+
 def __post_init__(self):
     self.sort_index_1 = self.total_cards
     self.sort_index_2 = self.send_xyz_rank
@@ -81,10 +97,15 @@ class SimultaneousEquationCannonsState():
     _banished_xyz_ranks: List[int] = []
     _compare_mode = CompareMode.EXCLUDE
 
+    min_total: int = 0
+    max_total: int = 1000
+
+    hct_color_finder: HctColorFinder = None
     def __init__(self, fusion_levels: List[int], xyz_ranks: List[int],
                  banished_fusion_levels: List[int], banished_xyz_ranks: List[int],
                  compare_mode: CompareMode = CompareMode.EXCLUDE
                  ):
+        self.hct_color_finder = HctColorFinder(chroma=44,tone=61)
         self.set_extra_deck_monster_level(fusion_levels, xyz_ranks)
         self.set_banish_zone_monster_level(banished_fusion_levels, banished_xyz_ranks, compare_mode)
         self.generate_value_table()
@@ -104,6 +125,8 @@ class SimultaneousEquationCannonsState():
         2 more Rank 4, because we may not have more rank 4 in extra decks.
         This is the normal case, unless we play more than 2x Rank 4 Monster
         """
+        self.min_total = 1000
+        self.max_total = 0
         self._value_table = {}
 
         temp_fusion_levels = self.fusion_levels
@@ -140,6 +163,8 @@ class SimultaneousEquationCannonsState():
         or create new list with key l+r in value_table
         """
         total = send_fusion_level + send_xyz_rank * 2
+        self.min_total = min(self.min_total, total)
+        self.max_total = max(self.max_total, total)
         solution = SimultaneousEquationCannonsSolution(solution_exist=True,
                                                        monster_level_on_board=returned_fusion_level + returned_xyz_rank,
                                                        total_cards=total,
@@ -223,3 +248,16 @@ class SimultaneousEquationCannonsState():
         self._compare_mode = compare_mode
         self._banished_fusion_levels = sorted(banished_fusion_levels)
         self._banished_xyz_ranks = sorted(banished_xyz_ranks)
+
+    def find_color_range(self):
+        """find color range for visually distinguish total levels"""
+        res= {}
+        if self.min_total >=1000 or self.max_total <= 0:
+            return res
+        steps = self.max_total - self.min_total + 1
+
+        colors = self.hct_color_finder.find_colors(steps)
+
+        for step in range(steps):
+            res[self.min_total+step] = colors[step]
+        return res

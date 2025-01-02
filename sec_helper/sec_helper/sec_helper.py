@@ -51,6 +51,8 @@ def sec_helper() -> str:
         session['extra-deck-xyz'] = list(map(str,defaults_session['extra-deck-xyz']))
         session['extra-deck-fusion'] = list(map(str,defaults_session['extra-deck-fusion']))
         error = "over15"
+
+    color_range = sec.find_color_range()
     return render_template(
         "sec_helper.jinja2",
         title="SEC Helper",
@@ -58,6 +60,7 @@ def sec_helper() -> str:
         template="sec-helper-template",
         value_table=sec.value_table,
         error=error,
+        color_range=color_range,
     )
 
 def _get_session_variables(session_variables: dict):
