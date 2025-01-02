@@ -9,8 +9,7 @@
 ul.solution-display {
     margin: 0;
     padding: 0;
-    position: relative;
-    top: -70px;
+    
 }
 li.solution-row
 {
@@ -93,10 +92,10 @@ li.solution-row
     display: flex;
     flex-direction: column;
     width: 14em;
-    height: 4em;
+    //height: 4em;
     background-color: @color-00;
-    border: 0.02em solid@color-8;
-    position: relative;
+    border: 0.02em solid @color-8;
+    //position: relative;
     top: -90px;
     left: 11em;
     font-size: 25px;
@@ -105,6 +104,7 @@ li.solution-row
     border-radius: 0;
     .center;
     justify-content: center;
+    margin-top: 0.5em;
 }
 .monter-level{
     .solution;
@@ -114,8 +114,9 @@ li.solution-row
 }
 .reset-btn{
   display: inline;
-  position: relative;
+  //position: relative;
   margin: 0;
+  margin-top: 0.5em;
   width: 10em;
 
   padding: 0.5em;
@@ -127,8 +128,8 @@ li.solution-row
   font-weight: 600;
   text-decoration: none;
   transition: .3s ease;
-  left: 0;
-  top: -90px;
+  //left: 0;
+  //top: -90px;
   &:hover {
 
     background-color: @color-6;
@@ -138,3 +139,9 @@ li.solution-row
     
 }
 
+.vertical-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: .5em;
+}
