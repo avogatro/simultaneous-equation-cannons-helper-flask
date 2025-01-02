@@ -18,29 +18,27 @@
   
   <div class="container">
       <h1>{{ title }}</h1>
-       <h2>{{ subtitle }}</h2>
+      <h2>{{ subtitle }}</h2>
       <div class="solution-info" id ="solution-info">
       {% if error =="over15" %}
-      <label>Extra Deck Monster Over 15! Reset</label>
+        <label>Extra Deck Monster Over 15! Reset</label>
       {% else %}
-      <label>Select Total Number to Get More Info</label>
+        <label>Select Total Number to Get More Info</label>
       {% endif %}
       </div>
 
       <form action="{{ url_for('sec_helper_blueprint.banished_monsters_post') }}" method="post">
-      <button class="reset-btn" type="submit" name="button-save" value="reset" id="reset-btn">Reset Banished</button>
+        <button class="reset-btn" type="submit" name="button-save" value="reset" id="reset-btn">Reset Banished</button>
       </form>
       <ul class="solution-display">
       {% for key in value_table.keys() %}
         <li class="solution-row">
-
         {% if value_table[key]|length > 0 %}
           <label class="monter-level">Lvl {{value_table[key][0].monster_level_on_board}}:</label>
         {% endif %}
 
         {% for i in range(value_table[key]|length) %}
           <label class="solution" for="solution-input-{{key}}-{{i}}">
-            
             <div class="solution-total-cards">{{ value_table[key][i].total_cards }}</div>
             <input id="solution-input-{{key}}-{{i}}" name="solution-radio" value="{{key}}-{{i}}" type="radio" onchange=
             "changeSolution({{value_table[key][i].send_xyz_rank}},{{value_table[key][i].send_fusion_level}},
