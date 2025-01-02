@@ -104,6 +104,21 @@ html {
 b.help {
   color: @color-8;
 }
+img.img-help {
+  width: 350px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 20px 0;
+  .grid-item {
+    padding: 10px;
+  }
+  .grid-item.grid-first{
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+}
 
 .footer {
   width: clamp(500px, 948px, 88%);
