@@ -2,10 +2,10 @@
 
 {% block pagestyles %}
 {% assets "sec_helper_monster_selection_style_bundle" %}
-<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
 {% endassets %}
 {% assets "common_style_bundle" %}
-<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
 {% endassets %}
 {% endblock %}
 

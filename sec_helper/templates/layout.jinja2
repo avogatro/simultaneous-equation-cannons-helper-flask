@@ -11,7 +11,7 @@
   <meta name="HandheldFriendly" content="True"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="theme-color" content="#87a2d5"/>
-  <link rel="shortcut icon" href="{{ url_for('static', filename='dist/img/icon.png') }}" type="image/x-icon"/>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='dist/img/icon50.png') }}" type="image/x-icon"/>
 
   <meta property="og:site_name" content="{{ title }}"/>
   <meta property="og:type" content="website"/>
@@ -26,14 +26,13 @@
 
   <meta name=”robots” content="index, follow">
   <meta name="google-site-verification" content="L1zBK9Y78YkuGa1P6_524rFVyNY6bSK6PMXLvzLYOno" />
-  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,800" rel="stylesheet">
-  {# <link rel="stylesheet" href="https://use.typekit.net/sus7rlu.css">  #}
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600&display=swap" rel="stylesheet">
+  
   {% block pagestyles %}{% endblock %}
 </head>
 
 <body class="{{ template }}">
   {% block content %}{% endblock %}
-  {# {% include 'analytics.jinja2' %}  #}
 
   <footer class="footer"><label>2025 Created by <div class="author"> Avogatro</div></label></footer>
 </body>
