@@ -1,10 +1,14 @@
 """page routes for sec_helper"""
 
-from flask import Blueprint
+from flask import Blueprint,current_app
 from flask import render_template, session, redirect, url_for
 
 from webargs import fields, validate
 from webargs.flaskparser import abort, parser
+
+from flask_sitemapper import Sitemapper
+
+
 
 ### enable import sub modules in current directory
 # pylint: disable=C0411
@@ -23,6 +27,9 @@ from model.simultaneous_equation_cannons_state import SimultaneousEquationCannon
 from model.form_input_monsters import parse_monster_level
 
 sec_helper_blueprint = Blueprint("sec_helper_blueprint", __name__, template_folder="templates", static_folder="static")
+### sitemap
+sitemapper = Sitemapper()
+
 
 validators_args = {
     "xyz-selection": fields.List(fields.Str(), validate =[validate.Length(min=0,max=12) ]),
@@ -30,7 +37,11 @@ validators_args = {
     "button-save":fields.Str()
 }
 
-
+@sitemapper.include(
+    lastmod = "2025-001-03",
+    changefreq = "monthly",
+    priority = 1.0,
+)
 @sec_helper_blueprint.route("/", methods=["GET"])
 def sec_helper() -> str:
     """
@@ -75,6 +86,12 @@ def _get_session_variables(session_variables: dict):
             res[key] = session_variables[key] #set to default 
     return res
 
+
+@sitemapper.include(
+    lastmod = "2025-001-03",
+    changefreq = "monthly",
+    priority = 1.0,
+)
 @sec_helper_blueprint.route("/extra_deck", methods=["GET"])
 def extra_deck() -> str:
     """
@@ -83,7 +100,6 @@ def extra_deck() -> str:
 
     defaults_session = {'extra-deck-xyz':[2,3,4,5,6], 'extra-deck-fusion': [2,3,4,5,6] }
     session_vars = _get_session_variables(defaults_session)
-
     return render_template(
         "monster_selection.jinja2",
         title="Define Extra Deck Monsters",
@@ -115,7 +131,11 @@ def extra_deck_post(args) -> str:
     return redirect(url_for('sec_helper_blueprint.sec_helper'))
 
 
-
+@sitemapper.include(
+    lastmod = "2025-001-03",
+    changefreq = "monthly",
+    priority = 1.0,
+)
 @sec_helper_blueprint.route("/banished", methods=["GET"])
 def banished_monsters() :
     """
@@ -124,7 +144,7 @@ def banished_monsters() :
 
     defaults_session = {'banished-xyz':[], 'banished-fusion': [] }
     session_vars = _get_session_variables(defaults_session)
-
+    
     return render_template(
         "monster_selection.jinja2",
         title="Define Previously Banished Monsters",
@@ -168,14 +188,25 @@ def handle_request_parsing_error(err, req, schema, *, error_status_code, error_h
     """
     abort(error_status_code, errors=err.messages)
 
+@sitemapper.include(
+    lastmod = "2025-001-03",
+    changefreq = "monthly",
+    priority = 1.0,
+)
 @sec_helper_blueprint.route("/help", methods=["GET"])
 def sec_help() -> str:
     """
     show help page
     """
+    
     return render_template(
         "sec_helper_help.jinja2",
         title="Tutorials",
         subtitle="",
         template="sec-helper-template",
     )
+
+@current_app.route("/sitemap.xml")
+def r_sitemap():
+
+    return sitemapper.generate()

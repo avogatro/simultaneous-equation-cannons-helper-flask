@@ -1,5 +1,6 @@
-Flask==3.1.0 ; python_version >= "3.10" and python_version < "4.0"
-Flask_Assets==2.1.0
+flask==3.1.0 ; python_version >= "3.10" and python_version < "4.0"
+flask_assets==2.1.0
+flask-sitemapper==1.8.1
 python-dotenv==1.0.1
 webargs==8.6.0
 flake8==6.1.0 ; python_version >= "3.10" and python_version < "4.0"
