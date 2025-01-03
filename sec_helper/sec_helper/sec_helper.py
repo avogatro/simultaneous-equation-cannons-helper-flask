@@ -1,6 +1,6 @@
 """page routes for sec_helper"""
 
-from flask import Blueprint,current_app
+from flask import Blueprint,current_app, request, send_from_directory
 from flask import render_template, session, redirect, url_for
 
 from webargs import fields, validate
@@ -208,5 +208,10 @@ def sec_help() -> str:
 
 @current_app.route("/sitemap.xml")
 def r_sitemap():
-
     return sitemapper.generate()
+
+@current_app.route("/robots.txt")
+def r_robots():
+    
+    return  send_from_directory(current_app.static_folder, "robots.txt" )
+    

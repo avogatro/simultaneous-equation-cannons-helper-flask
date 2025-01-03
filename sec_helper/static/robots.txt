@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://avogatro.pythonanywhere.com/sitemap.xml
