@@ -13,14 +13,13 @@ ul.solution-display {
 }
 li.solution-row
 {
-   
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin: 0;
-    padding: 0.2em;
-  
+    padding: 5px;
 }
+
 .solution {
     border: 1px solid @color-8;
     padding: 0;
@@ -31,12 +30,9 @@ li.solution-row
     background-color: @color-00;
     width: 74px;
     height: 74px;
-    
     display: grid;
     transition: .3s ease;
     .center;
-
-
     input[type=radio]  {
         appearance: none;
         -webkit-appearance: none;
@@ -64,6 +60,7 @@ li.solution-row
         opacity: 0.8;
     }
 }
+
 .solution-send-xyz-rank {
     display: none;
 }
@@ -79,21 +76,19 @@ li.solution-row
 .solution-monster-level {
     display: none;
 }
+
 .solution-total-cards {
     .center;
     justify-content: center;
     display: grid;
-    
-    
 }
+
 .solution-info{
     display: flex;
     flex-direction: column;
     width: 14em;
-    //height: 4em;
     background-color: @color-00;
     border: 0.02em solid @color-8;
-    //position: relative;
     font-size: 25px;
     font-weight: 400;
     color:@color-8;
@@ -102,19 +97,19 @@ li.solution-row
     justify-content: center;
     margin-top: 0.5em;
 }
-.monter-level{
+
+.monter-level {
     .solution;
     .solution-total-cards;
     border: none;
     width: 150px;
 }
-.reset-btn{
+
+.reset-btn {
   display: inline;
-  //position: relative;
   margin: 0;
   margin-top: 0.5em;
   width: 10em;
-
   padding: 0.5em;
   border: 0.1em solid @color-6;
   border-radius: 0.5rem;
@@ -124,15 +119,10 @@ li.solution-row
   font-weight: 600;
   text-decoration: none;
   transition: .3s ease;
-  //left: 0;
-  //top: -90px;
   &:hover {
-
     background-color: @color-6;
     color: @white;
   }
-  
-    
 }
 
 .vertical-wrapper {

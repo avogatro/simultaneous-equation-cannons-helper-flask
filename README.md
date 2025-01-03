@@ -78,7 +78,8 @@ That is why I want to use this program to help me to play when I still know how 
 - git clone this project
 - install Python 3 
 - pip install -r requirements.txt
-- flask run --host=0.0.0.0
+- copy file .env.example to .env
+- flask run --host=0.0.0.0 --debug
 - open url 0.0.0.0:5000 with any browser
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
