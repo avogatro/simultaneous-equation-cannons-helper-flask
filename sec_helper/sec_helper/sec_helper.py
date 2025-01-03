@@ -38,7 +38,7 @@ validators_args = {
 }
 
 @sitemapper.include(
-    lastmod = "2025-001-03",
+    lastmod = "2025-01-03",
     changefreq = "monthly",
     priority = 1.0,
 )
@@ -88,7 +88,7 @@ def _get_session_variables(session_variables: dict):
 
 
 @sitemapper.include(
-    lastmod = "2025-001-03",
+    lastmod = "2025-01-03",
     changefreq = "monthly",
     priority = 1.0,
 )
@@ -132,7 +132,7 @@ def extra_deck_post(args) -> str:
 
 
 @sitemapper.include(
-    lastmod = "2025-001-03",
+    lastmod = "2025-01-03",
     changefreq = "monthly",
     priority = 1.0,
 )
@@ -189,7 +189,7 @@ def handle_request_parsing_error(err, req, schema, *, error_status_code, error_h
     abort(error_status_code, errors=err.messages)
 
 @sitemapper.include(
-    lastmod = "2025-001-03",
+    lastmod = "2025-01-03",
     changefreq = "monthly",
     priority = 1.0,
 )
