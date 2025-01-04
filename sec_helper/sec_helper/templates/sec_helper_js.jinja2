@@ -4,13 +4,13 @@
 function changeSolution(send_xyz,send_fusion,returned_xyz,returned_fusion) {
     var solutionInfo = document.getElementById('solution-info');
     solutionInfo.innerHTML = '';
-    label = document.createElement("label");
-    label.innerText = "Send Xyz "+ send_xyz +" Fusion "+ send_fusion;
-    solutionInfo.appendChild(label);
+    p = document.createElement("p");
+    p.innerText = "Send Xyz "+ send_xyz +" Fusion "+ send_fusion;
+    solutionInfo.appendChild(p);
 
-    label = document.createElement("label");
-    label.innerText = "Return Xyz "+ returned_xyz +" Fusion "+ returned_fusion;
-    solutionInfo.appendChild(label);
+    p = document.createElement("p");
+    p.innerText = "Return Xyz "+ returned_xyz +" Fusion "+ returned_fusion;
+    solutionInfo.appendChild(p);
 }
 </script>
 {% endblock  %}
