@@ -1,6 +1,8 @@
 {% extends "layout.jinja2" %}
 
 {% block pagestyles %}
+
+
   {% assets "sec_helper_main_style_bundle" %}
     <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
   {% endassets %}
@@ -18,7 +20,7 @@
   <div class="container">
       <h1>{{ title }}</h1>
 
-    <h3>Usage</h3>
+    <h2>Usage</h2>
 
     <p>Use the <b class="help">Extra Deck</b> page to setup levels and ranks.</p>
     
