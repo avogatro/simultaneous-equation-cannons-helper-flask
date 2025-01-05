@@ -1,0 +1,35 @@
+@import 'variables.less';
+
+b.help {
+    color: @color-8;
+}
+
+img.img-help {
+    width: 350px;
+    
+}
+
+img#img-total, img#img-level{
+    height: 350px;
+}
+
+img#img-send{
+    height: 294px;
+}
+
+img#img-banish{
+    height: 289px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 20px 0;
+    .grid-item {
+        padding: 10px;
+    }
+    .grid-item.grid-first{
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+}

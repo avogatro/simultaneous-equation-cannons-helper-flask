@@ -3,6 +3,10 @@
 {% block pagestyles %}
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com"> 
   
+  {% assets "sec_helper_help_bundle" %}
+    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
+  {% endassets %}
+
   {% assets "common_style_bundle" %}
     <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
   {% endassets %}
@@ -33,7 +37,7 @@
             This is the <b class="help">total cards</b>.</p>
         </div>
         <div class= "grid-item">
-            <img class="img-help" src="{{ url_for('static', filename='dist/img/total_cards.webp') }}" alt="total-cards">
+            <img id="img-total" class="img-help" src="{{ url_for('static', filename='dist/img/total_cards.webp') }}" alt="total-cards">
         </div>
         
         <div class= "grid-item">
@@ -41,7 +45,7 @@
             This is the <b class="help">monster level to match</b>.</p>
         </div>
         <div class= "grid-item">
-            <img class="img-help" src="{{ url_for('static', filename='dist/img/level_to_match.webp') }}" alt="level-to-match">
+            <img id="img-level" class="img-help" src="{{ url_for('static', filename='dist/img/level_to_match.webp') }}" alt="level-to-match">
         </div>
         <div class= "grid-item">
             <p>On the main screen of this app, you can see in every row:</p>
@@ -61,7 +65,7 @@
             <p>If you click on the <b class="help">total cards</b> button, you will see what to send and what to return.</p>
         </div>
         <div class= "grid-item">
-            <img class="img-help" src="{{ url_for('static', filename='dist/img/what_to_send.webp') }}" alt="what-to-send">
+            <img id="img-send" class="img-help" src="{{ url_for('static', filename='dist/img/what_to_send.webp') }}" alt="what-to-send">
         </div>
         
         <div class= "grid-item">
@@ -69,7 +73,7 @@
             <p>Use the <b class="help">Banished Monsters</b> page to define the situation.</p>
         </div>
         <div class= "grid-item">
-            <img class="img-help" src="{{ url_for('static', filename='dist/img/pre_banish.webp') }}" alt="pre-banish">
+            <img id="img-banish" class="img-help" src="{{ url_for('static', filename='dist/img/pre_banish.webp') }}" alt="pre-banish">
         </div>
     </div>
   
