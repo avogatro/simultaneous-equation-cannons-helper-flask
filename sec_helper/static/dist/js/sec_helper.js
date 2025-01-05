@@ -1,6 +1,4 @@
 
-{# {% block js %}
-<script type="text/javascript">
 function changeSolution(send_xyz,send_fusion,returned_xyz,returned_fusion) {
     var solutionInfo = document.getElementById('solution-info');
     solutionInfo.innerHTML = '';
@@ -12,5 +10,3 @@ function changeSolution(send_xyz,send_fusion,returned_xyz,returned_fusion) {
     p.innerText = "Return Xyz "+ returned_xyz +" Fusion "+ returned_fusion;
     solutionInfo.appendChild(p);
 }
-</script>
-{% endblock  %} #}

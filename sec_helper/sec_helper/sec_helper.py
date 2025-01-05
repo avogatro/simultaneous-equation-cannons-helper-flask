@@ -206,6 +206,13 @@ def sec_help() -> str:
         template="sec-helper-template",
     )
 
+@sec_helper_blueprint.route("/sec_helper.js", methods=["GET"])
+def sec_help_js() -> str:
+    """
+    show js help page
+    """
+    return send_from_directory(os.path.join(current_app.static_folder,"dist","js"), "sec_helper.js")
+
 @current_app.route("/sitemap.xml")
 def r_sitemap():
     return sitemapper.generate()

@@ -1,12 +1,8 @@
 {% extends "layout.jinja2" %}
 
 {% block pagestyles %}
-
-
-  {% assets "sec_helper_main_style_bundle" %}
-    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
-  {% endassets %}
-
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com"> 
+  
   {% assets "common_style_bundle" %}
     <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
   {% endassets %}
