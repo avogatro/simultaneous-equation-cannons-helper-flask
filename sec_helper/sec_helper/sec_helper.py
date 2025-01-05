@@ -66,7 +66,7 @@ def sec_helper() -> str:
     color_range = sec.find_color_range()
     return render_template(
         "sec_helper.jinja2",
-        title="SEC Helper",
+        title="YGO SEC Helper",
         subtitle="༼ つ ◕_◕ ༽つ",
         template="sec-helper-template",
         value_table=sec.value_table,
