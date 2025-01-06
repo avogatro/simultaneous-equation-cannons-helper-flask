@@ -6,10 +6,10 @@
   {# prevent google crawler crawl duplicated pages #}
   <link rel="canonical" href="{{url_for(request.endpoint, _external= true)}}" />
   {% assets "home_style_bundle" %}
-    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+    <link href="{{ request.host_url + ASSET_URL }}" rel="stylesheet" type="text/css">
   {% endassets %}
   {% assets "common_style_bundle" %}
-  <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
+  <link href="{{ request.host_url + ASSET_URL }}" rel="stylesheet" type="text/css">
   {% endassets %}
 {% endblock %}
 

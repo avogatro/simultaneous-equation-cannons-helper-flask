@@ -2,15 +2,17 @@
 
 {% block pagestyles %}
   {# whitelisting of css js or font #}
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com"> 
+  {# sha256 +'unsafe-hashes' is for inline script possible: onload="this.onload=null;this.rel='stylesheet'" #}
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; font-src https://fonts.gstatic.com"> 
   {# prevent google crawler crawl duplicated pages #}
   <link rel="canonical" href="{{url_for(request.endpoint, _external= true)}}" />
+  
   {% assets "sec_helper_main_style_bundle" %}
-    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="{{ request.host_url + ASSET_URL }}" type="text/css" rel="stylesheet" as="style">
   {% endassets %}
 
   {% assets "common_style_bundle" %}
-    <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="{{ request.host_url + ASSET_URL }}" type="text/css" rel="stylesheet" as="style">
   {% endassets %}
    
 {% endblock %}
@@ -44,11 +46,11 @@
 
         {% for i in range(value_table[key]|length) %}
           {% set hct_color = color_range[value_table[key][i].total_cards] %}
-          <label class="solution" style="color:{{hct_color}}" for="solution-input-{{key}}-{{i}}">
+          <label class="solution" data-color="{{hct_color}}" for="solution-input-{{key}}-{{i}}">
             <div class="solution-total-cards" >{{ value_table[key][i].total_cards }}</div>
-            <input id="solution-input-{{key}}-{{i}}" name="solution-radio" value="{{key}}-{{i}}" type="radio" onchange=
-            "changeSolution({{value_table[key][i].send_xyz_rank}},{{value_table[key][i].send_fusion_level}},
-            {{value_table[key][i].returned_xyz_rank}},{{value_table[key][i].returned_fusion_level}})"/>
+            <input class="solution-radio" id="solution-input-{{key}}-{{i}}" name="solution-radio" value="{{key}}-{{i}}" type="radio"
+            data-sendxyz="{{value_table[key][i].send_xyz_rank}}" data-sendfusion="{{value_table[key][i].send_fusion_level}}"
+            data-returnedxyz="{{value_table[key][i].returned_xyz_rank}}" data-returnedfusion="{{value_table[key][i].returned_fusion_level}}"/>
           </label>
         {% endfor %}
         </li>

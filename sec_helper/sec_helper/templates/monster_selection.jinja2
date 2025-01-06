@@ -2,14 +2,14 @@
 
 {% block pagestyles %}
 {# whitelisting of css js or font #}
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src https://fonts.gstatic.com">
 {# prevent google crawler crawl duplicated pages #}
 <link rel="canonical" href="{{url_for(request.endpoint, _external= true)}}" />
 {% assets "sec_helper_monster_selection_style_bundle" %}
-<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
+<link href="{{ request.host_url + ASSET_URL }}"  type="text/css" rel="stylesheet" as="style">
 {% endassets %}
 {% assets "common_style_bundle" %}
-<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" rel="preload" onload="this.onload=null;this.rel='stylesheet'">
+<link href="{{ request.host_url + ASSET_URL }}"  type="text/css" rel="stylesheet" as="style">
 {% endassets %}
 {% endblock %}
 
