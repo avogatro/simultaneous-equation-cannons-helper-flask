@@ -28,12 +28,15 @@ img#img-banish{
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 0.8fr;
-    gap: 20px 0;
+    gap: 20px 20px;
     .grid-item {
         padding: 10px;
     }
     .grid-item.grid-first{
         grid-column-start: 1;
         grid-column-end: 2;
+    }
+    @media (max-width: 700px) {
+        grid-template-columns: 1fr;
     }
 }
