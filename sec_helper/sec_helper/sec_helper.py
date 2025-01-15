@@ -64,6 +64,7 @@ def sec_helper() -> str:
         error = "over15"
 
     color_range = sec.find_color_range()
+    session.permanent = True
     return render_template(
         "sec_helper.jinja2",
         title="YGO SEC Helper",
