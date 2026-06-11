@@ -1,0 +1,418 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --color-000: hsl(0, 0%, 10%);
+  --color-00: hsl(0, 0%, 15%);
+  --color-0: hsl(0, 0%, 20%);
+  --color-6: hsl(185, 60%, 44%);
+  --color-8: hsl(358, 57%, 66%);
+  --color-9: hsl(353, 99%, 66%);
+  --white: #F9F9F5;
+  --xyz-color: black;
+  --fusion-color: var(--color-9);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, button, input {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--color-000);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 5px;
+  padding: 20px 0;
+  background: transparent;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 50px;
+  width: 50px;
+  margin-right: 1rem;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.logo-container::after, .logo-container::before {
+  content: '';
+  position: absolute;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
+  background-image: conic-gradient(from var(--angle), hsl(185,60%,44%), hsl(219,100%,81.5%), transparent, hsl(358,57%,66%), hsl(353,99%,66%), transparent, hsl(185,60%,44%));
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 1;
+  border-radius: 14px;
+  animation-duration: 3s;
+  animation-name: spin;
+  animation-timing-function: linear;
+  animation-delay: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+.logo-container::before {
+  filter: blur(0.25rem);
+  opacity: .5;
+}
+
+@keyframes spin {
+  from { --angle: 0deg; }
+  to { --angle: 360deg; }
+}
+
+.logo-btn {
+  background: var(--color-00);
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.logo-img {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.nav-bar-url {
+  background: transparent;
+  color: var(--color-6);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-bar-url:hover {
+  color: var(--color-9);
+}
+
+.nav-bar-url.active {
+  color: var(--color-9);
+}
+
+/* Buttons */
+.btn-primary, .reset-btn, .save-btn {
+  display: inline-block;
+  margin-top: 0.5em;
+  padding: 0.5em 1em;
+  border: 0.1em solid var(--color-6);
+  border-radius: 0.5rem;
+  color: var(--color-6);
+  background-color: var(--color-00);
+  font-size: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-primary:hover, .reset-btn:hover, .save-btn:hover {
+  background-color: var(--color-6);
+  color: var(--white);
+}
+
+.btn-danger {
+  display: inline-block;
+  margin-top: 0.5em;
+  padding: 0.5em 1em;
+  border: 0.1em solid var(--color-8);
+  border-radius: 0.5rem;
+  color: var(--color-8);
+  background-color: var(--color-00);
+  font-size: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-danger:hover {
+  background-color: var(--color-8);
+  color: var(--white);
+}
+
+/* Typography */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+/* Solution Table */
+.solution-table {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.solution-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 0;
+  padding: 5px;
+  gap: 0;
+}
+
+.level-label {
+  border: none;
+  font-size: 25px;
+  font-weight: 400;
+  color: var(--color-8);
+  background-color: var(--color-00);
+  width: 150px;
+  height: 74px;
+  display: grid;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.solution-info {
+  display: flex;
+  flex-direction: column;
+  width: 14em;
+  background-color: var(--color-00);
+  border: 0.02em solid var(--color-8);
+  font-size: 25px;
+  font-weight: 400;
+  color: var(--color-8);
+  border-radius: 0;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  margin-top: 0.5em;
+  padding: 10px;
+}
+.solution-info p {
+  margin: 0;
+}
+
+.card-btn {
+  border: 1px solid var(--color-8);
+  font-size: 25px;
+  font-weight: 400;
+  color: var(--color-8);
+  background-color: var(--color-00);
+  width: 74px;
+  height: 74px;
+  display: grid;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.card-btn:hover {
+  background-color: var(--color-8);
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.card-btn.active {
+  background: var(--color-8);
+  color: var(--color-00);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--color-00);
+  border: 1px solid var(--color-8);
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--color-8);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--white);
+}
+
+/* Checkbox Group */
+.checkbox-group-label {
+  display: block;
+  margin: 0.5em;
+  padding: 0.5em;
+  font-size: 1.2rem;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 0.5em;
+  margin-left: 0;
+  padding: 0.2em;
+}
+
+.checkbox-wrapper {
+  margin: 5px;
+}
+
+.checkbox-label-xyz {
+  display: inline-block;
+  font-size: 25px;
+  font-weight: 400;
+  border: 0.1em solid var(--xyz-color);
+  color: var(--xyz-color);
+  background-color: var(--white);
+  margin: 0;
+  padding: 0.1em;
+  border-radius: 0;
+  width: 2.70em;
+  height: 2.70em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.checkbox-label-xyz:hover {
+  background: var(--xyz-color);
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.checkbox-label-xyz.checked {
+  background: var(--xyz-color);
+  color: var(--white);
+}
+
+.checkbox-label-fusion {
+  display: inline-block;
+  font-size: 25px;
+  font-weight: 400;
+  border: 0.1em solid var(--fusion-color);
+  color: var(--fusion-color);
+  background-color: var(--white);
+  margin: 0;
+  padding: 0.1em;
+  border-radius: 0;
+  width: 2.70em;
+  height: 2.70em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.checkbox-label-fusion:hover {
+  background: var(--fusion-color);
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.checkbox-label-fusion.checked {
+  background: var(--fusion-color);
+  color: var(--white);
+}
+
+/* Help Grid */
+.help-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.help-grid p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.help-img {
+  width: 100%;
+  border: 1px solid var(--color-8);
+}
