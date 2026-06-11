@@ -101,7 +101,7 @@ function App() {
       <nav className="glass-container" id="navbar">
         <div className="logo-container">
           <button className="logo-btn" onClick={() => setCurrentView('home')}>
-            <img src="/img/icon.webp" alt="logo" className="logo-img" />
+            <img src={`${import.meta.env.BASE_URL}img/icon.webp`} alt="logo" className="logo-img" />
           </button>
         </div>
         <button 

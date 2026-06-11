@@ -20,14 +20,14 @@ export default function HelpView() {
           <p>Add those numbers together. This is the <b>total cards</b>.</p>
         </div>
         <div>
-          <img className="help-img" src="/img/total_cards.webp" alt="total-cards" />
+          <img className="help-img" src={`${import.meta.env.BASE_URL}img/total_cards.webp`} alt="total-cards" />
         </div>
 
         <div>
           <p>The opponent has monsters on the field that are not Link monsters, with a rank/level in the data. This is the <b>monster level to match</b>.</p>
         </div>
         <div>
-          <img className="help-img" src="/img/level_to_match.webp" alt="level-to-match" />
+          <img className="help-img" src={`${import.meta.env.BASE_URL}img/level_to_match.webp`} alt="level-to-match" />
         </div>
 
         <div>
@@ -51,7 +51,7 @@ export default function HelpView() {
           <p>If you click on the <b>total cards</b> button, you will see exactly what to send and what to return from the banish zone.</p>
         </div>
         <div>
-          <img className="help-img" src="/img/what_to_send.webp" alt="what-to-send" />
+          <img className="help-img" src={`${import.meta.env.BASE_URL}img/what_to_send.webp`} alt="what-to-send" />
         </div>
 
         <div>
@@ -59,7 +59,7 @@ export default function HelpView() {
           <p>Use the <b>Banished Monsters</b> page to define the previously banished monsters.</p>
         </div>
         <div>
-          <img className="help-img" src="/img/pre_banish.webp" alt="pre-banish" />
+          <img className="help-img" src={`${import.meta.env.BASE_URL}img/pre_banish.webp`} alt="pre-banish" />
         </div>
       </div>
     </div>
