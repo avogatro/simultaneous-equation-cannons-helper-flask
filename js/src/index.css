@@ -65,8 +65,8 @@ nav {
   display: flex;
   align-items: center;
   position: relative;
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   margin-right: 1rem;
 }
 
