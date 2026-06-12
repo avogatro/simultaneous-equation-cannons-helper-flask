@@ -1,9 +1,9 @@
 export default function HelpView() {
   return (
-    <div className="glass-container" style={{ padding: '2rem' }}>
+    <div className="glass-container" style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
       <h1>Tutorials</h1>
       <h2>Usage</h2>
-      
+
       <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '2rem' }}>
         Use the <strong style={{ color: 'var(--accent-1)' }}>Extra Deck</strong> page to setup levels and ranks available.
       </p>
