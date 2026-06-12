@@ -34,12 +34,20 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
         ) : (
           <div className="solution-info" style={{ marginTop: 0 }}>
             {!selectedSolution ? (
-              <p>Select Total Number to Get More Info</p>
+              <div>
+                <p>Select Total Number</p>
+                <p>to Get More Info</p>
+              </div>
             ) : (
-              <>
-                <p>Send Xyz {selectedSolution.send_xyz_rank} Fusion {selectedSolution.send_fusion_level}</p>
-                <p>Return Xyz {selectedSolution.returned_xyz_rank} Fusion {selectedSolution.returned_fusion_level}</p>
-              </>
+              <div className="solution-details-grid">
+                <div className="grid-label">Send</div>
+                <div className="grid-value"><span className="badge-xyz">Xyz</span> {selectedSolution.send_xyz_rank}</div>
+                <div className="grid-value"><span className="badge-fusion">Fusion</span> {selectedSolution.send_fusion_level}</div>
+
+                <div className="grid-label">Return</div>
+                <div className="grid-value"><span className="badge-xyz">Xyz</span> {selectedSolution.returned_xyz_rank}</div>
+                <div className="grid-value"><span className="badge-fusion">Fusion</span> {selectedSolution.returned_fusion_level}</div>
+              </div>
             )}
           </div>
         )}
@@ -59,13 +67,13 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
                 {solutions.map((sol, i) => {
                   const hctColor = colors[sol.total_cards];
                   const isActive = selectedSolution === sol;
-                  
+
                   return (
                     <button
                       key={i}
                       className={`card-btn ${isActive ? 'active' : ''}`}
-                      style={{ 
-                        color: isActive ? 'var(--color-00)' : hctColor, 
+                      style={{
+                        color: isActive ? 'var(--color-00)' : hctColor,
                         borderColor: hctColor,
                         backgroundColor: isActive ? hctColor : 'var(--color-00)'
                       }}

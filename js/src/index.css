@@ -23,8 +23,8 @@
   --color-8: hsl(358, 57%, 66%);
   --color-9: hsl(353, 99%, 66%);
   --white: #F9F9F5;
-  --xyz-color: black;
-  --fusion-color: var(--color-9);
+  --xyz-color: #000000;
+  --fusion-color: hsl(275, 55%, 44%);
 }
 
 * {
@@ -253,7 +253,10 @@ h2 {
 .solution-info {
   display: flex;
   flex-direction: column;
-  width: 14em;
+  min-width: 20em;
+  /* Rigid width to prevent shifting */
+  min-height: 5em;
+  /* Rigid height to prevent vertical jumping */
   background-color: var(--color-00);
   border: 0.02em solid var(--color-8);
   font-size: 25px;
@@ -265,11 +268,33 @@ h2 {
   text-align: center;
   justify-content: center;
   margin-top: 0.5em;
-  padding: 10px;
+  padding: 10px 25px;
 }
 
 .solution-info p {
   margin: 0;
+}
+
+.solution-details-grid {
+  display: grid;
+  grid-template-columns: 100px 130px 150px;
+  /* Fixed column widths prevent horizontal shifting when numbers change */
+  gap: 15px 10px;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-label {
+  font-weight: 600;
+  color: var(--color-8);
+}
+
+.grid-value {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Small gap between the badge and the number */
 }
 
 .card-btn {
@@ -442,4 +467,26 @@ h2 {
 .help-img {
   width: 100%;
   border: 1px solid var(--color-8);
+}
+
+/* Badges */
+.badge-fusion {
+  background-color: var(--fusion-color);
+  color: var(--white);
+  padding: 0.3em 0.3em;
+  border-radius: 4px;
+  font-weight: 600;
+  display: inline-block;
+  line-height: 1;
+}
+
+.badge-xyz {
+  background-color: var(--xyz-color);
+  color: var(--white);
+  padding: 0.3em 0.3em;
+  border-radius: 4px;
+  font-weight: 600;
+  display: inline-block;
+  line-height: 1;
+  border: 1px solid var(--color-0);
 }

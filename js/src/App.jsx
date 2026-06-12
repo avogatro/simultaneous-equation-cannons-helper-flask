@@ -48,6 +48,32 @@ function App() {
   useEffect(() => localStorage.setItem('sec_banished_fusion', JSON.stringify(banishedFusion)), [banishedFusion]);
   useEffect(() => localStorage.setItem('sec_banished_xyz', JSON.stringify(banishedXyz)), [banishedXyz]);
 
+  // Parse URL Parameters for shared setups
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    let updated = false;
+
+    if (params.has('fusion')) {
+      const f = params.get('fusion').split(',').map(n => parseInt(n)).filter(n => !isNaN(n));
+      if (f.length > 0) {
+        setExtraFusion(f);
+        updated = true;
+      }
+    }
+
+    if (params.has('xyz')) {
+      const x = params.get('xyz').split(',').map(n => parseInt(n)).filter(n => !isNaN(n));
+      if (x.length > 0) {
+        setExtraXyz(x);
+        updated = true;
+      }
+    }
+
+    if (updated) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   const handleResetBanished = () => {
     setBanishedFusion([]);
     setBanishedXyz([]);
