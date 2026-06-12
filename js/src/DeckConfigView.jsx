@@ -27,7 +27,7 @@ export default function DeckConfigView({ title, subtitle, fusion, setFusion, xyz
 
       <div style={{ marginTop: '20px' }}>
         <button className="save-btn" onClick={onSave} style={{ marginRight: '10px' }}>
-          Save
+          Done
         </button>
         {showReset && (
           <button className="reset-btn" onClick={handleReset}>
