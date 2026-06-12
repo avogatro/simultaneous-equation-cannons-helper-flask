@@ -10,7 +10,31 @@ const DEFAULT_EXTRA_FUSION = [2, 3, 4, 5, 6];
 const DEFAULT_EXTRA_XYZ = [2, 3, 4, 5, 6];
 
 function App() {
-  const [currentView, setCurrentView] = useState('home');
+  const getInitialView = () => {
+    const path = window.location.pathname;
+    if (path.includes('/extra')) return 'extra';
+    if (path.includes('/banished')) return 'banished';
+    if (path.includes('/help')) return 'help';
+    if (path.includes('/about')) return 'about';
+    return 'home';
+  };
+
+  const [currentView, setCurrentView] = useState(getInitialView);
+
+  const navigate = (view) => {
+    setCurrentView(view);
+    const basePath = '/simultaneous-equation-cannons-helper-flask/';
+    const newPath = view === 'home' ? basePath : `${basePath}${view}`;
+    window.history.pushState({ view }, '', newPath);
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentView(getInitialView());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
   
   // State for Deck Configuration
   const [extraFusion, setExtraFusion] = useState(() => {
@@ -97,7 +121,7 @@ function App() {
             setFusion={setExtraFusion}
             xyz={extraXyz}
             setXyz={setExtraXyz}
-            onSave={() => setCurrentView('home')}
+            onSave={() => navigate('home')}
           />
         );
       case 'banished':
@@ -109,7 +133,7 @@ function App() {
             setFusion={setBanishedFusion}
             xyz={banishedXyz}
             setXyz={setBanishedXyz}
-            onSave={() => setCurrentView('home')}
+            onSave={() => navigate('home')}
             showReset={true}
           />
         );
@@ -126,37 +150,37 @@ function App() {
     <div className="app-container">
       <nav className="glass-container" id="navbar">
         <div className="logo-container">
-          <button className="logo-btn" onClick={() => setCurrentView('home')}>
+          <button className="logo-btn" onClick={() => navigate('home')}>
             <img src={`${import.meta.env.BASE_URL}img/icon.webp`} alt="logo" className="logo-img" />
           </button>
         </div>
         <button 
           className={`nav-bar-url ${currentView === 'home' ? 'active' : ''}`}
-          onClick={() => setCurrentView('home')}
+          onClick={() => navigate('home')}
         >
           Main
         </button>
         <button 
           className={`nav-bar-url ${currentView === 'extra' ? 'active' : ''}`}
-          onClick={() => setCurrentView('extra')}
+          onClick={() => navigate('extra')}
         >
           Extra Deck
         </button>
         <button 
           className={`nav-bar-url ${currentView === 'banished' ? 'active' : ''}`}
-          onClick={() => setCurrentView('banished')}
+          onClick={() => navigate('banished')}
         >
           Banished Monsters
         </button>
         <button 
           className={`nav-bar-url ${currentView === 'help' ? 'active' : ''}`}
-          onClick={() => setCurrentView('help')}
+          onClick={() => navigate('help')}
         >
           Help
         </button>
         <button 
           className={`nav-bar-url ${currentView === 'about' ? 'active' : ''}`}
-          onClick={() => setCurrentView('about')}
+          onClick={() => navigate('about')}
         >
           About
         </button>

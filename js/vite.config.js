@@ -2,11 +2,22 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 import { VitePWA } from 'vite-plugin-pwa'
+import fs from 'fs'
+import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    {
+      name: 'copy-404',
+      closeBundle() {
+        fs.copyFileSync(
+          path.resolve(process.cwd(), 'dist/index.html'),
+          path.resolve(process.cwd(), 'dist/404.html')
+        );
+      }
+    },
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['img/icon.webp', 'img/icon.png', 'img/icon50.png', 'fonts/poppins-regular.woff2', 'fonts/poppins-semibold.woff2'],
