@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://avogatro.github.io/simultaneous-equation-cannons-helper-flask/sitemap.xml
