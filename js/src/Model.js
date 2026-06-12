@@ -1,10 +1,15 @@
-// Helper to format a color string (HSL)
+import { Hct, hexFromArgb } from '@material/material-color-utilities';
+
+// Helper to format a color string (HCT mimicking python backend)
 function findHslColor(index, totalSteps) {
     if (totalSteps <= 0) return '#000000';
     const hueStep = 360.0 / totalSteps;
     const hue = (index * hueStep + 180) % 360;
-    const lightness = 50 + (index % 2) * 15; // vary lightness slightly
-    return `hsl(${hue}, 70%, ${lightness}%)`;
+    const chroma = 44;
+    const tone = 61 + (index % 2) * 20; 
+    
+    const hct = Hct.from(hue, chroma, tone);
+    return hexFromArgb(hct.toInt());
 }
 
 class SimultaneousEquationCannonsSolution {
