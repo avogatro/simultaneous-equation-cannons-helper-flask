@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { SimultaneousEquationCannonsState } from './Model';
 import HomeView from './HomeView';
 import DeckConfigView from './DeckConfigView';
@@ -34,13 +34,13 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Calculate State Model
-  const secState = new SimultaneousEquationCannonsState(
+  // Calculate State Model (Memoized to prevent blocking main thread)
+  const secState = useMemo(() => new SimultaneousEquationCannonsState(
     extraFusion,
     extraXyz,
     banishedFusion,
     banishedXyz
-  );
+  ), [extraFusion, extraXyz, banishedFusion, banishedXyz]);
 
   // Persistence Effects
   useEffect(() => localStorage.setItem('sec_extra_fusion', JSON.stringify(extraFusion)), [extraFusion]);

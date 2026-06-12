@@ -33,7 +33,9 @@
   padding: 0;
 }
 
-body, button, input {
+body,
+button,
+input {
   font-family: 'Poppins', sans-serif;
 }
 
@@ -76,12 +78,13 @@ nav {
   inherits: false;
 }
 
-.logo-container::after, .logo-container::before {
+.logo-container::after,
+.logo-container::before {
   content: '';
   position: absolute;
   height: calc(100% + 8px);
   width: calc(100% + 8px);
-  background-image: conic-gradient(from var(--angle), hsl(185,60%,44%), hsl(219,100%,81.5%), transparent, hsl(358,57%,66%), hsl(353,99%,66%), transparent, hsl(185,60%,44%));
+  background-image: conic-gradient(from var(--angle), hsl(185, 60%, 44%), hsl(219, 100%, 81.5%), transparent, hsl(358, 57%, 66%), hsl(353, 99%, 66%), transparent, hsl(185, 60%, 44%));
   top: 50%;
   left: 50%;
   translate: -50% -50%;
@@ -101,8 +104,13 @@ nav {
 }
 
 @keyframes spin {
-  from { --angle: 0deg; }
-  to { --angle: 360deg; }
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
+  }
 }
 
 .logo-btn {
@@ -147,7 +155,9 @@ nav {
 }
 
 /* Buttons */
-.btn-primary, .reset-btn, .save-btn {
+.btn-primary,
+.reset-btn,
+.save-btn {
   display: inline-block;
   margin-top: 0.5em;
   padding: 0.5em 1em;
@@ -162,7 +172,9 @@ nav {
   text-decoration: none;
 }
 
-.btn-primary:hover, .reset-btn:hover, .save-btn:hover {
+.btn-primary:hover,
+.reset-btn:hover,
+.save-btn:hover {
   background-color: var(--color-6);
   color: var(--white);
 }
@@ -255,6 +267,7 @@ h2 {
   margin-top: 0.5em;
   padding: 10px;
 }
+
 .solution-info p {
   margin: 0;
 }

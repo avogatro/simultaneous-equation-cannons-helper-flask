@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 export default function HomeView({ secState, onResetBanished, onResetExtraDeck }) {
   const [selectedSolution, setSelectedSolution] = useState(null);
-  const colors = secState.find_color_range();
+  const colors = useMemo(() => secState.find_color_range(), [secState]);
 
   const totalCardsInExtraDeck = secState._fusion_levels.length + (secState._xyz_ranks.length * 2);
   const hasError = totalCardsInExtraDeck > 15;
