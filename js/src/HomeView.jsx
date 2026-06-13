@@ -1,8 +1,16 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 export default function HomeView({ secState, onResetBanished, onResetExtraDeck }) {
   const [selectedSolution, setSelectedSolution] = useState(null);
-  const [isMatrixView, setIsMatrixView] = useState(true);
+  const [isMatrixView, setIsMatrixView] = useState(() => {
+    const saved = localStorage.getItem('sec_matrix_view');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sec_matrix_view', JSON.stringify(isMatrixView));
+  }, [isMatrixView]);
+
   const colors = useMemo(() => secState.find_color_range(), [secState]);
   const totalCardsInExtraDeck = secState._fusion_levels.length + (secState._xyz_ranks.length * 2);
   const hasError = totalCardsInExtraDeck > 15;
