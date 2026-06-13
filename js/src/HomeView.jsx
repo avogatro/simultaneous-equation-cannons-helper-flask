@@ -2,8 +2,8 @@ import { useState, useMemo } from 'react';
 
 export default function HomeView({ secState, onResetBanished, onResetExtraDeck }) {
   const [selectedSolution, setSelectedSolution] = useState(null);
+  const [isMatrixView, setIsMatrixView] = useState(true);
   const colors = useMemo(() => secState.find_color_range(), [secState]);
-
   const totalCardsInExtraDeck = secState._fusion_levels.length + (secState._xyz_ranks.length * 2);
   const hasError = totalCardsInExtraDeck > 15;
 
@@ -12,15 +12,32 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
     onResetBanished();
   };
 
+  const allTotalCards = useMemo(() => {
+    const totals = new Set();
+    Object.values(secState.value_table).forEach((solutions) => {
+      solutions.forEach((sol) => {
+        totals.add(sol.total_cards);
+      });
+    });
+    return Array.from(totals).sort((a, b) => a - b);
+  }, [secState.value_table]);
+
   return (
     <div className="app-container">
       <h1>YGO SEC Helper</h1>
       <h2>༼ つ ◕_◕ ༽つ</h2>
 
       <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', marginTop: '0.5em', marginBottom: '20px', alignItems: 'flex-start' }}>
-        <div>
-          <button className="reset-btn" onClick={handleReset} style={{ margin: 0 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <button className="reset-btn" onClick={handleReset} style={{ margin: 0, width: '100%' }}>
             Reset Banished
+          </button>
+          <button
+            className="btn-primary"
+            onClick={() => setIsMatrixView(!isMatrixView)}
+            style={{ margin: 0, width: '100%' }}
+          >
+            {isMatrixView ? 'Switch to List' : 'Switch to Grid'}
           </button>
         </div>
 
@@ -54,6 +71,16 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
       </div>
 
       <div className="solution-table">
+        {isMatrixView && allTotalCards.length > 0 && (
+          <div className="header-row">
+            <div className="header-spacer">Lvl \ Cards</div>
+            {allTotalCards.map((total) => (
+              <div key={total} className="header-label" style={{ color: colors[total] }}>
+                {total}
+              </div>
+            ))}
+          </div>
+        )}
         {Object.keys(secState.value_table).map((levelKey) => {
           const solutions = secState.value_table[levelKey];
           if (solutions.length === 0) return null;
@@ -63,26 +90,55 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
           return (
             <div key={levelKey} className="solution-row">
               <div className="level-label">Lvl {level}:</div>
-              <div className="cards-container">
-                {solutions.map((sol, i) => {
-                  const hctColor = colors[sol.total_cards];
-                  const isActive = selectedSolution === sol;
+              <div className="cards-container" style={{ flexWrap: isMatrixView ? 'nowrap' : 'wrap' }}>
+                {isMatrixView ? (
+                  allTotalCards.map((total) => {
+                    const sol = solutions.find((s) => s.total_cards === total);
+                    if (!sol) {
+                      return (
+                        <div key={total} className="card-placeholder" />
+                      );
+                    }
 
-                  return (
-                    <button
-                      key={i}
-                      className={`card-btn ${isActive ? 'active' : ''}`}
-                      style={{
-                        color: isActive ? 'var(--color-00)' : hctColor,
-                        borderColor: hctColor,
-                        backgroundColor: isActive ? hctColor : 'var(--color-00)'
-                      }}
-                      onClick={() => setSelectedSolution(sol)}
-                    >
-                      {sol.total_cards}
-                    </button>
-                  );
-                })}
+                    const hctColor = colors[sol.total_cards];
+                    const isActive = selectedSolution === sol;
+
+                    return (
+                      <button
+                        key={total}
+                        className={`card-btn ${isActive ? 'active' : ''}`}
+                        style={{
+                          color: isActive ? 'var(--color-00)' : hctColor,
+                          borderColor: hctColor,
+                          backgroundColor: isActive ? hctColor : 'var(--color-00)'
+                        }}
+                        onClick={() => setSelectedSolution(sol)}
+                      >
+                        {sol.total_cards}
+                      </button>
+                    );
+                  })
+                ) : (
+                  solutions.map((sol, i) => {
+                    const hctColor = colors[sol.total_cards];
+                    const isActive = selectedSolution === sol;
+
+                    return (
+                      <button
+                        key={i}
+                        className={`card-btn ${isActive ? 'active' : ''}`}
+                        style={{
+                          color: isActive ? 'var(--color-00)' : hctColor,
+                          borderColor: hctColor,
+                          backgroundColor: isActive ? hctColor : 'var(--color-00)'
+                        }}
+                        onClick={() => setSelectedSolution(sol)}
+                      >
+                        {sol.total_cards}
+                      </button>
+                    );
+                  })
+                )}
               </div>
             </div>
           );
