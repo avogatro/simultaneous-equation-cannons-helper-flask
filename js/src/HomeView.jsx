@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { SimultaneousEquationCannonsState } from './Model';
 
 export default function HomeView({ secState, onResetBanished, onResetExtraDeck }) {
   const [selectedSolution, setSelectedSolution] = useState(null);
@@ -11,6 +12,30 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
     localStorage.setItem('sec_matrix_view', JSON.stringify(isMatrixView));
   }, [isMatrixView]);
 
+  // Persistent reference to the initial configuration (unbanished state)
+  const initialSecState = useMemo(() => {
+    return new SimultaneousEquationCannonsState(
+      secState._fusion_levels,
+      secState._xyz_ranks,
+      [],
+      []
+    );
+  }, [secState._fusion_levels, secState._xyz_ranks]);
+
+  // Clear selected solution if it is no longer available in the current table
+  useEffect(() => {
+    if (selectedSolution) {
+      const levelKey = selectedSolution.monster_level_on_board;
+      const currentSolutions = secState.value_table[levelKey] || [];
+      const stillExists = currentSolutions.some(
+        (s) => s.total_cards === selectedSolution.total_cards
+      );
+      if (!stillExists) {
+        setSelectedSolution(null);
+      }
+    }
+  }, [secState.value_table, selectedSolution]);
+
   const colors = useMemo(() => secState.find_color_range(), [secState]);
   const totalCardsInExtraDeck = secState._fusion_levels.length + (secState._xyz_ranks.length * 2);
   const hasError = totalCardsInExtraDeck > 15;
@@ -22,13 +47,13 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
 
   const allTotalCards = useMemo(() => {
     const totals = new Set();
-    Object.values(secState.value_table).forEach((solutions) => {
+    Object.values(initialSecState.value_table).forEach((solutions) => {
       solutions.forEach((sol) => {
         totals.add(sol.total_cards);
       });
     });
     return Array.from(totals).sort((a, b) => a - b);
-  }, [secState.value_table]);
+  }, [initialSecState.value_table]);
 
   return (
     <div className="app-container">
@@ -89,45 +114,74 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
             ))}
           </div>
         )}
-        {Object.keys(secState.value_table).map((levelKey) => {
-          const solutions = secState.value_table[levelKey];
-          if (solutions.length === 0) return null;
+        {Object.keys(isMatrixView ? initialSecState.value_table : secState.value_table).map((levelKey) => {
+          const initialSolutions = initialSecState.value_table[levelKey] || [];
+          const currentSolutions = secState.value_table[levelKey] || [];
 
-          const level = solutions[0].monster_level_on_board;
+          if (isMatrixView) {
+            if (initialSolutions.length === 0) return null;
+            const level = initialSolutions[0].monster_level_on_board;
 
-          return (
-            <div key={levelKey} className="solution-row">
-              <div className="level-label">Lvl {level}:</div>
-              <div className="cards-container" style={{ flexWrap: isMatrixView ? 'nowrap' : 'wrap' }}>
-                {isMatrixView ? (
-                  allTotalCards.map((total) => {
-                    const sol = solutions.find((s) => s.total_cards === total);
-                    if (!sol) {
+            return (
+              <div key={levelKey} className="solution-row">
+                <div className="level-label">Lvl {level}:</div>
+                <div className="cards-container" style={{ flexWrap: 'nowrap' }}>
+                  {allTotalCards.map((total) => {
+                    const currentSol = currentSolutions.find((s) => s.total_cards === total);
+                    const initialSol = initialSolutions.find((s) => s.total_cards === total);
+
+                    if (currentSol) {
+                      const hctColor = colors[currentSol.total_cards];
+                      const isActive = selectedSolution === currentSol;
+                      return (
+                        <button
+                          key={total}
+                          className={`card-btn ${isActive ? 'active' : ''}`}
+                          style={{
+                            color: isActive ? 'var(--color-00)' : hctColor,
+                            borderColor: hctColor,
+                            backgroundColor: isActive ? hctColor : 'var(--color-00)'
+                          }}
+                          onClick={() => setSelectedSolution(currentSol)}
+                        >
+                          {currentSol.total_cards}
+                        </button>
+                      );
+                    } else if (initialSol) {
+                      return (
+                        <button
+                          key={total}
+                          className="card-btn disabled"
+                          disabled
+                          style={{
+                            color: 'hsl(0, 0%, 30%)',
+                            borderColor: 'hsl(0, 0%, 20%)',
+                            backgroundColor: 'transparent',
+                            cursor: 'not-allowed',
+                            opacity: 0.3
+                          }}
+                        >
+                          {total}
+                        </button>
+                      );
+                    } else {
                       return (
                         <div key={total} className="card-placeholder" />
                       );
                     }
+                  })}
+                </div>
+              </div>
+            );
+          } else {
+            if (currentSolutions.length === 0) return null;
+            const level = currentSolutions[0].monster_level_on_board;
 
-                    const hctColor = colors[sol.total_cards];
-                    const isActive = selectedSolution === sol;
-
-                    return (
-                      <button
-                        key={total}
-                        className={`card-btn ${isActive ? 'active' : ''}`}
-                        style={{
-                          color: isActive ? 'var(--color-00)' : hctColor,
-                          borderColor: hctColor,
-                          backgroundColor: isActive ? hctColor : 'var(--color-00)'
-                        }}
-                        onClick={() => setSelectedSolution(sol)}
-                      >
-                        {sol.total_cards}
-                      </button>
-                    );
-                  })
-                ) : (
-                  solutions.map((sol, i) => {
+            return (
+              <div key={levelKey} className="solution-row">
+                <div className="level-label">Lvl {level}:</div>
+                <div className="cards-container" style={{ flexWrap: 'wrap' }}>
+                  {currentSolutions.map((sol, i) => {
                     const hctColor = colors[sol.total_cards];
                     const isActive = selectedSolution === sol;
 
@@ -145,11 +199,11 @@ export default function HomeView({ secState, onResetBanished, onResetExtraDeck }
                         {sol.total_cards}
                       </button>
                     );
-                  })
-                )}
+                  })}
+                </div>
               </div>
-            </div>
-          );
+            );
+          }
         })}
       </div>
     </div>
